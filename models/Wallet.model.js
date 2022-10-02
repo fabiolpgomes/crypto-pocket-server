@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const WalletSchema = new Schema(
   {
-    wallet: [
+    typeofwallet: [
       {
         type: String,
         required: true,
@@ -11,11 +11,12 @@ const WalletSchema = new Schema(
         default: "BASIC",
       },
     ],
-    crypto: [{ type: String }],
+    owner: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    crypto: [{ type: Schema.Types.ObjectId, ref: "CryptoCoin" }],
   },
   { timestamps: true }
 );
 
 const WalletModel = mongoose.model("Wallet", WalletSchema);
 
-moduke.exports = WalletModel;
+module.exports = WalletModel;
