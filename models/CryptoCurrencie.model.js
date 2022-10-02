@@ -9,7 +9,7 @@ const cryptocurrencieSchema = new Schema({
   precoMedio: { type: Number },
   lucroAbsoluto: { type: Number },
   lucroPorcentagem: { type: Number },
-  wallet: [{ type: Schema.Types.ObjectId, ref: "Wallet" }],
+  wallet: { type: Schema.Types.ObjectId, ref: "Wallet" },
 });
 const CryptocurrencieModel = mongoose.model(
   "CryptoCoin",

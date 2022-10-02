@@ -166,7 +166,6 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
 router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   try {
     const loggedInUser = req.currentUser;
-    console.log(req.body);
 
     const editedUser = await UserModel.findByIdAndUpdate(
       loggedInUser._id,

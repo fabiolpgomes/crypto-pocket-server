@@ -10,9 +10,9 @@ async function attachCurrentUser(req, res, next) {
     });
 
     // ADICIONAR A CONDIÇÃO DE SÓ RENDERIZAR USUÁRIO QUE FORAM ATIVADOS
-    if (!user.emailConfirm) {
-      return res.status(400).json({ message: "User not activated" });
-    }
+    //if (!user.emailConfirm) {
+    //  return res.status(400).json({ message: "User not activated" });
+    //}
 
     req.currentUser = user;
 
