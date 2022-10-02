@@ -14,7 +14,7 @@ Simple REST API to allow for complete CRUD  at the endpoint:
 https://xxxxxx.herokuapp.com
 
 
-# Usage
+# Features - MERN stack
 
 Complete CRUD functionality
 
@@ -80,11 +80,11 @@ Complete CRUD functionality
 - [Fabio Gomes](https://github.com/fabiolpgomes)
 - [Bruno Apostolo](https://github.com/brunoapostolo)
 
-# crypto-pocket-server
+# Crypto Pocket CLIENT
 
-Back-end for Crypto Pocket control app (**mobile** and **web**)!
+Front-end for Crypto Pocket control app (**mobile** and **web**)!
 
-[Click here](https://github.com/jotavkf/kols-client)
+[Click here](https://github.com/fabiolpgomes/crypto-pocket-client)
 
 # Presentation
 
@@ -95,7 +95,7 @@ To run the application on your localhost, clone the repo and then execute the co
 
 **Note: Don't forget to create .env and update like exemple.env**
 
-- <code>$ git clone https://github.com/fabiolpgomes/crypto-pocket-server</code>
+- <code>$ git clone (https://github.com/fabiolpgomes/crypto-pocket-server)</code>
 - <code>$ cd crypto-pocket-server</code>
 - <code>$ npm install</code>
 - <code>$ npm run start</code>
