@@ -18,6 +18,7 @@ const UserSchema = new Schema(
     },
     passwordHash: { type: String, required: true },
     emailConfirm: { type: Boolean, default: false },
+    role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
     profilePic: {
       type: String,
       default:

@@ -12,14 +12,14 @@ const saltRounds = 10; // Define a quantidade de "saltos que serão adicionados 
 const generateToken = require("../config/jwt.config");
 const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-const isAdmin = require("../middlewares/isAdmin");
+// const isAdmin = require("../middlewares/isAdmin");
 
 //configurando o Transporter
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
   service: "Outlook",
   auth: {
-    user: "ironhackFG@outlook.com",
+    user: "ironhack85WD@outlook.com",
     pass: "SenhaSegura@123",
   },
 });
@@ -67,7 +67,7 @@ router.post("/sign-up", async (req, res) => {
     //configurando o email que será enviado!
 
     const mailOptions = {
-      from: "turma85wdft@hotmail.com", // nossa email
+      from: "ironhack85WD@outlook.com", // nossa email
       to: email, //email do usuário que se cadastrou
       subject: "Account Activation", //assunto
       html: `<p>Click on the link to activate your account:<p> <a href=http://localhost:4000/users/activate-account/${user._id}>LINK</a>`,
