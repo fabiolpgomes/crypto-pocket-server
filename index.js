@@ -1,8 +1,15 @@
 const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const dbConnection = require("./config/db.config");
+dbConnection();
 const app = express();
+app.use(express.json());
+app.use(cors({ origin: process.env.REACT_APP_URI }));
 
-app.get("/", function (req, res) {
-  res.send("Fala Brunão, tamo Juntos ");
+const UsersRoute = require("./routes/usuarios.routes");
+app.use("/usuarios", UsersRoute);
+
+app.listen(Number(process.env.PORT), () => {
+  console.log("Server up and running on port 4000");
 });
-
-app.listen(3000);
