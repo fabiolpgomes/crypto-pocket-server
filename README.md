@@ -1,10 +1,12 @@
-﻿# crypto-pocket-server #1
+﻿# Crypto Pocket #2
  
-Crypto Pocket is an app to take care of your cryptocurrency wallets
+Crypto Pocket is an app to take care of your cryptocurrency wallets.
 
 Back-end project for Crypto Pocket app (**mobile** and **web**)!
 
 # About the project
+
+The Crypto Pocket app was created to facilitate end-user cryptocurrency management. With a simple and straightforward 'interface', the user will be able to know the value of his asset position in real time. The application has the management of all the main currencies of the market that you make contributions, being possible to follow the performance of your investments.
 
 This project has been created in the third module at Ironhack São Paulo - Web Development Bootcamp.
 
@@ -78,9 +80,9 @@ Complete CRUD functionality
 - [Fabio Gomes](https://github.com/fabiolpgomes)
 - [Bruno Apostolo](https://github.com/brunoapostolo)
 
-# crypto-pocket-client
+# crypto-pocket-server
 
-Front-end for Crypto Pocket control app (**mobile** and **web**)!
+Back-end for Crypto Pocket control app (**mobile** and **web**)!
 
 [Click here](https://github.com/jotavkf/kols-client)
 
@@ -93,6 +95,7 @@ To run the application on your localhost, clone the repo and then execute the co
 
 **Note: Don't forget to create .env and update like exemple.env**
 
-- <code>$ git clone https://github.com/karenokasaki/kols-server</code>
-- <code>$ cd kols-server npm install</code>
+- <code>$ git clone https://github.com/fabiolpgomes/crypto-pocket-server</code>
+- <code>$ cd crypto-pocket-server</code>
+- <code>$ npm install</code>
 - <code>$ npm run start</code>
