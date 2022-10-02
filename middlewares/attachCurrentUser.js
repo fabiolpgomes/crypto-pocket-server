@@ -4,7 +4,6 @@ async function attachCurrentUser(req, res, next) {
   //pegar o _id que esta´no req.auth -> req.auth._id
   try {
     const loggedInUser = req.auth;
-    console.log(loggedInUser);
 
     const user = await UserModel.findById(loggedInUser._id, {
       passwordHash: 0,
