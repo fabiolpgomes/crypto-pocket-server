@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/fabiolpgomes/crypto-pocket-server/issues"
   },
-  "homepage": "https://github.com/fabiolpgomes/crypto-pocket-server#readme",
+  
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
