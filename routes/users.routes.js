@@ -1,20 +1,19 @@
-//importar o express
 const express = require("express");
-// instanciar as rotas pegando do express
+const UserModel = require("../models/User.model");
+const WalletModel = require("../models/Wallet.model");
+const CryptocurrencieModel = require("../models/CryptoCurrencie.model");
+
 const router = express.Router();
 
-//importar os models
-const UserModel = require("../models/User.model");
-
 const bcrypt = require("bcrypt");
-const saltRounds = 10; // Define a quantidade de "saltos que serão adicionados a criptografia da senha"
+const saltRounds = 10;
 
 const generateToken = require("../config/jwt.config");
 const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-// const isAdmin = require("../middlewares/isAdmin");
+const isAdmin = require("../middlewares/isAdmin");
 
-//configurando o Transporter
+//Configurando o Email
 const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
   service: "Outlook",
@@ -23,16 +22,14 @@ let transporter = nodemailer.createTransport({
     pass: "SenhaSegura@123",
   },
 });
-// const logRequests = require("../middlewares/requests");
+
 // Sign up -  1º rota: Criar um user (Login com senha)
 router.post("/sign-up", async (req, res) => {
   try {
-    //capturando o password enviado no corpo da requisicao
     const { password, email } = req.body;
-
     //checando se a senha existe e se ela passou na RegEx
+
     if (
-      //checando se existe esse campo o req.body
       !password ||
       !password.match(
         //checando se a senha tem os pré requisitos de segurança
@@ -44,11 +41,11 @@ router.post("/sign-up", async (req, res) => {
       });
     }
 
-    //gerar o salt com a quantidade de saltos definida(10)
+    //gerar o salt
     const salt = await bcrypt.genSalt(saltRounds); //chamar a funcao hash da biblioteca e passar a senha juntamente com o salt criado
     console.log(salt);
 
-    //chamar a função hash da biblioteca e passar a senha juntamente com o salt criado
+    //gerar passwordHash com a senha enviada pelo usuário mais o salt criado
     const hashedPassword = await bcrypt.hash(password, salt);
     console.log(hashedPassword);
 
@@ -61,11 +58,7 @@ router.post("/sign-up", async (req, res) => {
     //deletar o campo da senha antes de devolver o usuario para a response
     delete user._doc.passwordHash;
 
-    //return res.status(201).json(user);
-
-    //envio de email   <<<===== ADD
-    //configurando o email que será enviado!
-
+    //envio de email, configurando o email que será enviado!
     const mailOptions = {
       from: "ironhack85WD@outlook.com", // nossa email
       to: email, //email do usuário que se cadastrou
@@ -91,57 +84,55 @@ router.get("/activate-account/:idUser", async (req, res) => {
     const user = await UserModel.findOne({ _id: idUser });
 
     if (!user) {
-      return res.send("Erro na ativação da conta");
+      return res.send("Account activation error");
     }
 
     await UserModel.findByIdAndUpdate(idUser, {
       emailConfirm: true,
     });
 
-    res.send(`<h1>Usuário ativado</h1>`);
+    res.send(`<h1>User activated</h1>`);
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
   }
 });
 
-// LOGIN
+//Rota Login
 router.post("/login", async (req, res) => {
   try {
-    //capturar as chaves de email e password enviadas no corpo da requisicao
+    //capturar email e senha
     const { email, password } = req.body;
+
+    //confirmar se foi enviado email e senha no body da requisição
     if (!email || !password) {
       return res
         .status(400)
-        .json({ message: "Please, inform email and password! " });
+        .json({ message: "Please inform your email and password." });
     }
-    // achar o user que esta tentando logar
+
+    //achar o user que está tentando logar
     const user = await UserModel.findOne({ email: email });
-
+    //checar se o usuário existe no banco de dados
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "User not found it on the system" });
+      return res.status(400).json({ message: "User not registered" });
     }
 
-    //checar se o usuario existe
+    //sabendo que o user existe, vamos comparar as senhas agora
     if (await bcrypt.compare(password, user.passwordHash)) {
-      //caso positivo, apagar o passwordHash do user para nao devolver essa informacao
+      //deletando a senha
       delete user._doc.passwordHash;
 
-      // gerar o token com as informacoes do usuario
+      //criando token de acesso para esse usuário
       const token = generateToken(user);
 
-      // retornar um objeto com as informacoes do user e o token
+      //retorna um objeto com o token e com as informações do usuário logado
       return res.status(200).json({
-        user: user,
         token: token,
+        user: user,
       });
     } else {
-      //se a comparacao da password e do passwordHash nao forem compativeis, retornar o erro com a mensagem
-      return res
-        .status(400)
-        .json({ message: "Email and/or password not correct" });
+      return res.status(400).json({ message: "Senha ou email incorretos" });
     }
   } catch (error) {
     console.log(error);
@@ -149,6 +140,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//get one user, agora usando os middlewares
 router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
   try {
     // console.log(req.currentUser); //criado no middle attachCurrentUser
@@ -174,11 +166,14 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
 // Editar um usuario
 router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   try {
-    const idUser = req.currentUser._id;
-    const newName = req.body.name;
-    const editedUser = await UserModel.findIdAndUpdate(
-      idUser,
-      { name: newname },
+    const loggedInUser = req.currentUser;
+    console.log(req.body);
+
+    const editedUser = await UserModel.findByIdAndUpdate(
+      loggedInUser._id,
+      {
+        ...req.body,
+      },
       { new: true, runValidators: true }
     );
 
