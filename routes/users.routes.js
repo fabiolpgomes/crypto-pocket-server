@@ -18,8 +18,9 @@ const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
   service: "Outlook",
   auth: {
-    user: "ironhack85WD@outlook.com",
-    pass: "SenhaSegura@123",
+    secure: false,
+    user: "bruno.apos13.85wdftironhack_bruno.apos13@outlook.com",
+    pass: "kkklmpkkklmp@3713132",
   },
 });
 
@@ -60,7 +61,7 @@ router.post("/sign-up", async (req, res) => {
 
     //envio de email, configurando o email que será enviado!
     const mailOptions = {
-      from: "ironhack85WD@outlook.com", // nossa email
+      from: "bruno.apos13.85wdftironhack_bruno.apos13@outlook.com", // nossa email
       to: email, //email do usuário que se cadastrou
       subject: "Account Activation", //assunto
       html: `<p>Click on the link to activate your account:<p> <a href=http://localhost:4000/users/activate-account/${user._id}>LINK</a>`,
@@ -81,17 +82,16 @@ router.get("/activate-account/:idUser", async (req, res) => {
   try {
     const { idUser } = req.params;
 
-    const user = await UserModel.findOne({ _id: idUser });
+    const user = await UserModel.findByIdAndUpdate(idUser, {
+      ...req.body,
+      emailConfirm: true,
+    });
 
     if (!user) {
       return res.send("Account activation error");
     }
 
-    await UserModel.findByIdAndUpdate(idUser, {
-      emailConfirm: true,
-    });
-
-    res.send(`<h1>User activated</h1>`);
+    return res.status(200).json("DEU CERTINHO");
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
@@ -158,7 +158,6 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
 
     return res.status(200).json(user);
   } catch (error) {
-    console.log(error);
     return res.status(404).json({ message: " User not found" });
   }
 });
