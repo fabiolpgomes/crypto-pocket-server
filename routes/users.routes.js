@@ -187,6 +187,17 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
-// desativar usuario
+
+
+// Desativar a conta de um usuario
+
+router.get("/activate-account/:idUser", async (req, res) => {
+  try {
+    const { idUser } = req.params;
+
+    const user = await UserModel.findByIdAndUpdate(idUser, {
+      ...req.body,
+      emailConfirm: false,
+    });
 
 module.exports = router;
