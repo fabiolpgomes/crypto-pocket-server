@@ -11,8 +11,8 @@ const cryptocurrencieSchema = new Schema({
   lucroAbsoluto: { type: Number },
   lucroPorcentagem: { type: Number },
   wallet: { type: Schema.Types.ObjectId, ref: "Wallet" },
-  sell
-  purchase
+  //sell: 
+  //purchase
   
 }, {timestamps: true});
 const CryptocurrencieModel = mongoose.model(
