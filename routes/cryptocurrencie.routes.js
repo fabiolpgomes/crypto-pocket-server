@@ -6,7 +6,6 @@ const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 const router = express.Router();
 const axios = require("axios");
-
 router.post(
   "/purchasecoin/:idWallet",
   isAuth,
@@ -18,10 +17,8 @@ router.post(
       );
       console.log(response.data);
       const { idWallet } = req.params;
-
       // axios pegando as informacoes da api de moedas.
       const loggedInUser = req.currentUser;
-
       const allCoins = response.data.data.map((element) => {
         return {
           nome_da_moeda: element.name,
@@ -41,25 +38,46 @@ router.post(
           Number(req.body.investment) / Number(filtrandoCoin[0].valor_moeda)
         ),
       });
-
-        const walletSize = await WalletModel.findById(idWallet);
-        if (
-          walletSize.crypto.length > 3 &&
-          loggerInUser.signatureType === "BASIC"
-        ){
-          return res.status(400).json({ message: "Its not possible to include more cryptocurrencie on this wallet "})
-        }
-        
-    const attachingToWallet = await WalletModel.findByIdAndUpdate(
-      idWallet,
-      {
-        $push: { crypto: criatingCoin._id },
-      },
-      { new: true }
-    );
-    return res.status(200).json(attachingToWallet);
-  } catch (error) {
-    return res.status(400).json({message: "Cryptocurrencie not inserted"});
+      const walletSize = await WalletModel.findById(idWallet);
+      if (
+        walletSize.crypto.length > 3 &&
+        loggedInUser.signatureType === "BASIC"
+      ) {
+        return res.status(400).json({
+          erro: "Não é possível adicionar mais nenhuma moeda a essa carteira",
+        });
+      }
+      const attachingToWallet = await WalletModel.findByIdAndUpdate(
+        idWallet,
+        {
+          $push: { crypto: criatingCoin._id },
+        },
+        { new: true }
+      );
+      return res.status(200).json(attachingToWallet);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ erro: error });
+    }
   }
 );
+
+/* router.get("/updatingcrypto/:idWallet", async (req, res) => {
+  try {
+    const { idWallet } = req.params;
+    const walletUpdatedCoins = await CryptocurrencieModel.updateMany({wallet: idWallet},
+      {cryptocurrencie: 'teste aprovado'});
+    const cryptoCoins = await
+  } catch (error) {}
+});
+
+
+router.get("/selling", async (req, res) => {
+  try {
+    const 
+  }
+});
+
+*/
+
 module.exports = router;
