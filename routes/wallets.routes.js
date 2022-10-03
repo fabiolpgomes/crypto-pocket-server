@@ -10,10 +10,12 @@ const router = express.Router();
 router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
   try {
     const loggedUser = req.currentUser;
-    if (loggedUser.wallets.length > 0 && loggedUser.signatureType === "BASIC") {
+    if (
+      (loggedUser.wallets.length > 0 && loggedUser.signatureType === "BASIC") ||
+      (loggedUser.wallets.length > 1 && loggedUser.signatureType === "PLUS")
+    ) {
       return res.status(200).json({
-        mensagem:
-          "Você não pode adicionar mais nenhuma carteira com esse plano",
+        erro: "Você não pode adicionar mais nenhuma carteira com esse plano",
       });
     }
     const newWallet = await WalletModel.create({
@@ -32,5 +34,7 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(400).json("ERRO");
   }
 });
+
+// adicionar uma moeda a essa wallet
 
 module.exports = router;
