@@ -34,6 +34,18 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(400).json({messsage: "Unable to add to wallet"});
   }
 });
+router.put("/editwallet/:idWallet", async (req, res) => {
+  try {
+    const { idWallet } = req.params;
+    const editingWallet = await WalletModel.findByIdAndUpdate(idWallet, {
+      ...req.body,
+      name: req.body.name,
+    });
+    return res.status(200).json({ message: "Nome da carteira alterado" });
+  } catch (error) {
+    return res.status(400).json({ message: "Erro ao alterar a carteira" });
+  }
+});
 
 // adicionar uma moeda a essa wallet
 
