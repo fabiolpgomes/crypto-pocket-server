@@ -42,7 +42,14 @@ router.post(
         ),
       });
 
-<<<<<<< HEAD
+        const walletSize = await WalletModel.findById(idWallet);
+        if (
+          walletSize.crypto.length > 3 &&
+          loggerInUser.signatureType === "BASIC"
+        ){
+          return res.status(400).json({ message: "Its not possible to include more cryptocurrencie on this wallet "})
+        }
+        
     const attachingToWallet = await WalletModel.findByIdAndUpdate(
       idWallet,
       {
@@ -53,30 +60,6 @@ router.post(
     return res.status(200).json(attachingToWallet);
   } catch (error) {
     return res.status(400).json({message: "Cryptocurrencie not inserted"});
-=======
-
-      const walletSize = await WalletModel.findById(idWallet);
-      if (
-        walletSize.crypto.length > 3 &&
-        loggedInUser.signatureType === "BASIC"
-      ) {
-        return res.status(400).json({
-          erro: "Não é possível adicionar mais nenhuma moeda a essa carteira",
-        });
-      }
-      const attachingToWallet = await WalletModel.findByIdAndUpdate(
-        idWallet,
-        {
-          $push: { crypto: criatingCoin._id },
-        },
-        { new: true }
-      );
-      return res.status(200).json(attachingToWallet);
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ erro: error });
-    }
->>>>>>> 949ef03737daeef88c383a79c4c63ab6c06f9e32
   }
 );
 module.exports = router;
