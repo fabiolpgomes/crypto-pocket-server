@@ -1,5 +1,4 @@
 const express = require("express");
-
 const UserModel = require("../models/User.model");
 const WalletModel = require("../models/Wallet.model");
 const CryptocurrencieModel = require("../models/CryptoCurrencie.model");
