@@ -18,12 +18,6 @@ const UserSchema = new Schema(
     },
     passwordHash: { type: String, required: true },
     emailConfirm: { type: Boolean, default: false },
-    role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
-    profilePic: {
-      type: String,
-      default:
-        "https://cdn2.vectorstock.com/i/thumb-large/23/81/default-avatar-profile-icon-vector-18942381.jpg",
-    },
     wallets: [{ type: Schema.Types.ObjectId, ref: "Wallet" }],
   },
   {

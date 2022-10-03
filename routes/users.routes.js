@@ -91,7 +91,7 @@ router.get("/activate-account/:idUser", async (req, res) => {
       return res.send("Account activation error");
     }
 
-    return res.status(200).json("DEU CERTINHO");
+    return res.status(200).json("User activated");
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
@@ -132,7 +132,7 @@ router.post("/login", async (req, res) => {
         user: user,
       });
     } else {
-      return res.status(400).json({ message: "Senha ou email incorretos" });
+      return res.status(400).json({ message: "Incorrect password or email" });
     }
   } catch (error) {
     console.log(error);
@@ -185,4 +185,14 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
+
+
+router.get("/desactived-account/:idUser", async (req, res) => {
+  try {
+    const { idUser } = req.params;
+
+    const user = await UserModel.findByIdAndUpdate(idUser, {
+      ...req.body,
+      emailConfirm: false,
+    });
 module.exports = router;
