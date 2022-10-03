@@ -19,6 +19,7 @@ router.post("/purchasecoin/:idWallet", async (req, res) => {
       wallet: idWallet,
       
     });
+
     const attachingToWallet = await WalletModel.findByIdAndUpdate(
       idWallet,
       {
