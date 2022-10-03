@@ -72,7 +72,7 @@ router.post("/sign-up", async (req, res) => {
     return res.status(201).json(user);
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ message: "Email not sent" });
   }
 });
 
@@ -87,10 +87,10 @@ router.get("/activate-account/:idUser", async (req, res) => {
     });
 
     if (!user) {
-      return res.send("Account activation error");
+      return res.send({ mensage: "Account activation error" });
     }
 
-    return res.status(200).json("User activated");
+    return res.status(200).json({ mensage: "User activated" });
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
@@ -133,11 +133,11 @@ router.post("/login", async (req, res) => {
         user: user,
       });
     } else {
-      return res.status(400).json({ message: "Incorrect password or email" });
+      return res.status(200).json({ message: "User logged" });
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ mensage: "Incorrect password or email" });
   }
 });
 
