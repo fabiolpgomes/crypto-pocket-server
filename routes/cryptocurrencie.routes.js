@@ -61,23 +61,18 @@ router.post(
     }
   }
 );
-
-/* router.get("/updatingcrypto/:idWallet", async (req, res) => {
+router.get("/updatingcrypto/:idWallet", async (req, res) => {
   try {
     const { idWallet } = req.params;
-    const walletUpdatedCoins = await CryptocurrencieModel.updateMany({wallet: idWallet},
-      {cryptocurrencie: 'teste aprovado'});
-    const cryptoCoins = await
-  } catch (error) {}
-});
+    const walletUpdatedCoins = await CryptocurrencieModel.updateMany(
+      { wallet: idWallet },
+      { ...req.body, cryptocurrencie: "teste aprovado" }
+    );
 
-
-router.get("/selling", async (req, res) => {
-  try {
-    const 
+    return res.status(200).json({ message: "Teste aprovado" });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 });
-
-*/
-
+router.get("/selling");
 module.exports = router;
