@@ -29,7 +29,7 @@ router.post("/purchasecoin/:idWallet", async (req, res) => {
     );
     return res.status(200).json(attachingToWallet);
   } catch (error) {
-    return res.status(400).json("CREDO");
+    return res.status(400).json({message: "Cryptocurrencie inserted"});
   }
 });
 module.exports = router;
