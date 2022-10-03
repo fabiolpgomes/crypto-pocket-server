@@ -11,7 +11,6 @@ const saltRounds = 10;
 const generateToken = require("../config/jwt.config");
 const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-const isAdmin = require("../middlewares/isAdmin");
 
 //Configurando o Email
 const nodemailer = require("nodemailer");
@@ -185,14 +184,18 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
-
-
 router.get("/desactived-account/:idUser", async (req, res) => {
   try {
     const { idUser } = req.params;
-
     const user = await UserModel.findByIdAndUpdate(idUser, {
       ...req.body,
       emailConfirm: false,
     });
+    return res.status(200).json({ message: "Desactivated User" });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Erro ao atualizar o status do usuário" });
+  }
+});
 module.exports = router;
