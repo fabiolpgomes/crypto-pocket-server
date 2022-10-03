@@ -11,7 +11,6 @@ const saltRounds = 10;
 const generateToken = require("../config/jwt.config");
 const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-const isAdmin = require("../middlewares/isAdmin");
 
 //Configurando o Email
 const nodemailer = require("nodemailer");
@@ -118,7 +117,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User not registered" });
     }
 
-   //verificar se o usario tem email confirm === false... se sim, enviar nodemailer.
+    //verificar se o usario tem email confirm === false... se sim, enviar nodemailer.
 
     //sabendo que o user existe, vamos comparar as senhas agora
     if (await bcrypt.compare(password, user.passwordHash)) {
@@ -187,7 +186,6 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
-
 // Desativar a conta de um usuario
 
 router.get("/desactived-account/:idUser", async (req, res) => {
@@ -199,4 +197,12 @@ router.get("/desactived-account/:idUser", async (req, res) => {
       emailConfirm: false,
     });
 
+    return res.status(200).json({ message: " Desactived User" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ message: "Erro ao atualizar o status do usuario" });
+  }
+});
 module.exports = router;
