@@ -188,7 +188,6 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
 });
 
 
-
 // Desativar a conta de um usuario
 
 router.get("/desactived-account/:idUser", async (req, res) => {

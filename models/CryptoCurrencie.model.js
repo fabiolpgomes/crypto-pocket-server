@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-<<<<<<< HEAD
+
 const cryptocurrencieSchema = new Schema(
   {
     cryptocurrencie: { type: String, required: true },
@@ -18,20 +18,6 @@ const cryptocurrencieSchema = new Schema(
     timestamps: true,
   }
 );
-=======
-
-const cryptocurrencieSchema = new Schema({
-  nome: { type: String, required: true },
-  saldo: { type: Number },
-  precoAPI: { type: Number },
-  totalMoedas: { type: Number },
-  aporte: { type: Number },
-  precoMedio: { type: Number },
-  lucroAbsoluto: { type: Number },
-  lucroPorcentagem: { type: Number },
-  wallet: { type: Schema.Types.ObjectId, ref: "Wallet" },
-}, {timestamps: true});
->>>>>>> c56acc142872371bd8925175d8d9b4718bcc844a
 
 const CryptocurrencieModel = mongoose.model(
   "CryptoCoin",
