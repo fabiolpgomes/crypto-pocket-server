@@ -72,7 +72,7 @@ router.post("/sign-up", async (req, res) => {
     return res.status(201).json(user);
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ message: "Email not sent" });
   }
 });
 
@@ -87,10 +87,10 @@ router.get("/activate-account/:idUser", async (req, res) => {
     });
 
     if (!user) {
-      return res.send("Account activation error");
+      return res.send({ mensage: "Account activation error" });
     }
 
-    return res.status(200).json("User activated");
+    return res.status(200).json({ mensage: "User activated" });
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
@@ -117,6 +117,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User not registered" });
     }
 
+
     //sabendo que o user existe, vamos comparar as senhas agora
     if (await bcrypt.compare(password, user.passwordHash)) {
       //deletando a senha
@@ -131,11 +132,11 @@ router.post("/login", async (req, res) => {
         user: user,
       });
     } else {
-      return res.status(400).json({ message: "Incorrect password or email" });
+      return res.status(200).json({ message: "User logged" });
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ mensage: "Incorrect password or email" });
   }
 });
 
@@ -184,6 +185,9 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
+// Desativar a conta de um usuario
+
+
 router.get("/desactived-account/:idUser", async (req, res) => {
   try {
     const { idUser } = req.params;
@@ -191,11 +195,14 @@ router.get("/desactived-account/:idUser", async (req, res) => {
       ...req.body,
       emailConfirm: false,
     });
-    return res.status(200).json({ message: "Desactivated User" });
+
+    return res.status(200).json({ message: " Desactived User" });
   } catch (error) {
+    console.log(error);
     return res
       .status(400)
-      .json({ message: "Erro ao atualizar o status do usuário" });
+      .json({ message: "Erro ao atualizar o status do usuario" });
+
   }
 });
 module.exports = router;

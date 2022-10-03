@@ -42,6 +42,7 @@ router.post(
         ),
       });
 
+
       const walletSize = await WalletModel.findById(idWallet);
       if (
         walletSize.crypto.length > 3 &&

@@ -15,7 +15,7 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
       (loggedUser.wallets.length > 1 && loggedUser.signatureType === "PLUS")
     ) {
       return res.status(200).json({
-        erro: "Você não pode adicionar mais nenhuma carteira com esse plano",
+        erro: "You cannot add any more wallets with this plan",
       });
     }
     const newWallet = await WalletModel.create({
@@ -31,7 +31,7 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(201).json(walletAttachment);
   } catch (error) {
     console.log(error);
-    return res.status(400).json("ERRO");
+    return res.status(400).json({messsage: "Unable to add to wallet"});
   }
 });
 

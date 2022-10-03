@@ -20,6 +20,7 @@ Complete CRUD functionality
 
 ## User Routes
 
+
 **Create** criar usuário
 
     POST /users/sign-up
