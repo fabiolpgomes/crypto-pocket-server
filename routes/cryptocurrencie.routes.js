@@ -6,7 +6,6 @@ const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 const router = express.Router();
 const axios = require("axios");
-const { findByIdAndUpdate } = require("../models/User.model");
 
 router.post(
   "/purchasecoin/:idWallet",
