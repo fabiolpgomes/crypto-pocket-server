@@ -33,4 +33,6 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
+// adicionar uma moeda a essa wallet
+
 module.exports = router;

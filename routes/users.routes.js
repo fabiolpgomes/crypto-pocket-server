@@ -118,6 +118,8 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User not registered" });
     }
 
+   //verificar se o usario tem email confirm === false... se sim, enviar nodemailer.
+
     //sabendo que o user existe, vamos comparar as senhas agora
     if (await bcrypt.compare(password, user.passwordHash)) {
       //deletando a senha
@@ -184,5 +186,7 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(400).json(error);
   }
 });
+
+// desativar usuario
 
 module.exports = router;

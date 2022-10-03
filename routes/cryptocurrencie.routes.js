@@ -10,11 +10,14 @@ const router = express.Router();
 router.post("/purchasecoin/:idWallet", async (req, res) => {
   try {
     const { idWallet } = req.params;
+
+// axios pegando as informacoes da api de moedas.
+
     const criatingCoin = await CryptocurrencieModel.create({
-      ...req.body,
       nome: req.body.nome,
-      aporte: req.body.aporte,
+      aporte: Number(req.body.aporte),
       wallet: idWallet,
+      
     });
     const attachingToWallet = await WalletModel.findByIdAndUpdate(
       idWallet,
