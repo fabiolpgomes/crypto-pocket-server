@@ -9,10 +9,6 @@ const router = express.Router();
 
 router.post("/purchasecoin/:idWallet", async (req, res) => {
   try {
-
-
-
-    
     const { idWallet } = req.params;
     const criatingCoin = await CryptocurrencieModel.create({
       ...req.body,
