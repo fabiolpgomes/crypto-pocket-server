@@ -19,6 +19,7 @@ const UserSchema = new Schema(
     passwordHash: { type: String, required: true },
     emailConfirm: { type: Boolean, default: false },
     wallets: [{ type: Schema.Types.ObjectId, ref: "Wallet" }],
+    profit: { type: Number, default: 0 },
   },
   {
     timestamps: true,
