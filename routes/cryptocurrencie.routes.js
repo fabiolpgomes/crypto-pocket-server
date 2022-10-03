@@ -6,7 +6,6 @@ const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
 const router = express.Router();
 const axios = require("axios");
-
 router.post(
   "/purchasecoin/:idWallet",
   isAuth,
@@ -18,10 +17,8 @@ router.post(
       );
       console.log(response.data);
       const { idWallet } = req.params;
-
       // axios pegando as informacoes da api de moedas.
       const loggedInUser = req.currentUser;
-
       const allCoins = response.data.data.map((element) => {
         return {
           nome_da_moeda: element.name,
@@ -41,8 +38,6 @@ router.post(
           Number(req.body.investment) / Number(filtrandoCoin[0].valor_moeda)
         ),
       });
-
-
       const walletSize = await WalletModel.findById(idWallet);
       if (
         walletSize.crypto.length > 3 &&
