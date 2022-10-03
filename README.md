@@ -20,29 +20,23 @@ Complete CRUD functionality
 
 ## User Routes
 
-**Create**
+**Sing-up**
+        POST /sign-up
 
-    POST /users/create-user
+**Activate Account**
+        GET / activate-account/:idUser
 
 **Login**
+        POST /login
 
-    POST /users/login
-
-**Get Current User**
-
-    GET /users/profile
+**Edit User**
+      PUT /edit
     
-**Update Account**
-
-    PATCH /users/profile/update
+**Desactived User**
+      GET /desactived-account/:idUser
     
-**Delete Account**
 
-    DELETE /users/profile/disable-account
     
-**Active Account**
-
-    PATCH /users/profile/active-account
 
 ## Enter information regarding the purchase of crypto assets Routes
 
