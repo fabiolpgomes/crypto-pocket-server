@@ -20,52 +20,42 @@ Complete CRUD functionality
 
 ## User Routes
 
-**Sing-up**
-        POST /sign-up
 
-**Activate Account**
-        GET / activate-account/:idUser
+**Create** criar usuário
 
-**Login**
-        POST /login
+    POST /users/sign-up
 
-**Edit User**
-      PUT /edit
+**Activate account** Ativa o usuário por um link enviado via email
+
+   GET/users/activate-account/:idUser
+
+**Login** Cria o usuário e o TOKEN
+
+    POST /users/login
+
+**Get Current User**  Permite o acesso ao perfil por meio do Token
+
+    GET /users/profile
     
-**Desactived User**
-      GET /desactived-account/:idUser
+**Edit user data** Edita os dados de cadastro do usuário
+
+  PUT /users/edit
+
+**Desactivate Account**
+
+    GET /users/profile/disable-account/:idUser
     
+**Delete Create Wallet** Cria nova carteira de investimento
 
-    
+    PUT /wallets/createwallet
 
-## Enter information regarding the purchase of crypto assets Routes
+**Edita o nome da carteira**
 
-**Create Crypto Currencies**
+    PUT /wallets/editwallet/:idWallet
 
-    POST /
+**Create a new investment** Faz um novo investimento para a carteira, fazendo um trade de moedas
 
-  
-
-**Delete Crypto Currencies**
-
-    DELETE /crypto/:idCrypto/disable-business
-
-
-**Update Crypto Currencie Info**
-
-    PATCH /crypto/cryptocurrencie/update/:id
-
-**Delete Crypto Currencie**
-
-    DELETE /crypto/cryptocurrencie/:id
-
-**Input Product**
-
-    PATCH /products/input-product
-
-**Output Product**
-
-    PATCH /products/output-product
+    DELETE cryptotrade/purchasecoin/:idWalet
 
 
     
