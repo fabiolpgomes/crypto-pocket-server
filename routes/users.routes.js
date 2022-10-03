@@ -117,7 +117,6 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User not registered" });
     }
 
-    //verificar se o usario tem email confirm === false... se sim, enviar nodemailer.
 
     //sabendo que o user existe, vamos comparar as senhas agora
     if (await bcrypt.compare(password, user.passwordHash)) {
@@ -188,10 +187,10 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
 
 // Desativar a conta de um usuario
 
+
 router.get("/desactived-account/:idUser", async (req, res) => {
   try {
     const { idUser } = req.params;
-
     const user = await UserModel.findByIdAndUpdate(idUser, {
       ...req.body,
       emailConfirm: false,
@@ -203,6 +202,7 @@ router.get("/desactived-account/:idUser", async (req, res) => {
     return res
       .status(400)
       .json({ message: "Erro ao atualizar o status do usuario" });
+
   }
 });
 module.exports = router;
