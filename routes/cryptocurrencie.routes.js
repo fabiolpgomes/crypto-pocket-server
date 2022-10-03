@@ -64,13 +64,36 @@ router.post(
 router.get("/updatingcrypto/:idWallet", async (req, res) => {
   try {
     const { idWallet } = req.params;
-    const walletUpdatedCoins = await CryptocurrencieModel.updateMany(
-      { wallet: idWallet },
-      { ...req.body, cryptocurrencie: "teste aprovado" }
+    const walletUpdatedCoins = await CryptocurrencieModel.find({
+      wallet: idWallet,
+    });
+    const response1 = await axios.get(
+      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=e8d1cfa6-a4a1-4cba-8253-5e925080d77a"
     );
 
-    return res.status(200).json({ message: "Teste aprovado" });
+    const allCoins1 = response1.data.data.map((element) => {
+      return {
+        nome_da_moeda: element.name,
+        valor_moeda: element.quote.USD.price,
+      };
+    });
+    //////////////////////////
+
+    console.log(walletUpdatedCoins);
+    console.log(allCoins1);
+
+    walletUpdatedCoins.forEach(async (coin) => {
+      let apiFetching = allCoins1.filter((moeda) => {
+        return moeda.nome_da_moeda == coin.cryptocurrencie;
+      });
+      await CryptocurrencieModel.findByIdAndUpdate(coin._id, {
+        priceAPI: apiFetching[0].valor_moeda,
+      });
+    });
+
+    return res.status(200).json({ message: "Dados atualizados com sucesso" });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ message: error });
   }
 });
