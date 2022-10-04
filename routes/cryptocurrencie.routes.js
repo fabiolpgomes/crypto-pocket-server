@@ -15,7 +15,7 @@ router.post(
       const response = await axios.get(
         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=e8d1cfa6-a4a1-4cba-8253-5e925080d77a"
       );
-      console.log(response.data);
+      
       const { idWallet } = req.params;
       // axios pegando as informacoes da api de moedas.
       const loggedInUser = req.currentUser;
