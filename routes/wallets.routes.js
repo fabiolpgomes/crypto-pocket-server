@@ -31,7 +31,7 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(201).json(walletAttachment);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({messsage: "Unable to add to wallet"});
+    return res.status(400).json({ messsage: "Unable to add to wallet" });
   }
 });
 router.put("/editwallet/:idWallet", async (req, res) => {
@@ -47,6 +47,29 @@ router.put("/editwallet/:idWallet", async (req, res) => {
   }
 });
 
+router.get("/getallwallets", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const loggedUser = req.currentUser;
+    const walletsTotal = await UserModel.find({ _id: loggedUser._id }).populate(
+      "wallets"
+    );
+    return res.status(200).json(walletsTotal);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+});
+router.get("/getonewallet/:idwallet", async (req, res) => {
+  try {
+    const { idwallet } = req.params;
+    const specificWallet = await WalletModel.findById(idwallet).populate(
+      "crypto"
+    );
+    return res.status(200).json(specificWallet);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+});
 // adicionar uma moeda a essa wallet
 
 module.exports = router;
