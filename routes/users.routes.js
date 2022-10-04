@@ -69,7 +69,7 @@ router.post("/sign-up", async (req, res) => {
     //Dispara e=mail para o usuario
     await transporter.sendMail(mailOptions);
 
-    return res.status(201).json(user);
+    return res.status(201).json({ user });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ message: "Email not sent" });
@@ -90,10 +90,10 @@ router.get("/activate-account/:idUser", async (req, res) => {
       return res.send({ mensage: "Account activation error" });
     }
 
-    return res.status(200).json({ mensage: "User activated" });
+    return res.status(200).json({ message: "User activated" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ message: "Error at activating user" });
   }
 });
 
@@ -135,7 +135,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ mensage: "Incorrect password or email" });
+    return res.status(400).json({ message: "Incorrect password or email" });
   }
 });
 
@@ -155,7 +155,7 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
     delete user._doc.passwordHash; //deletar o password e a versao
     delete user._doc._v;
 
-    return res.status(200).json(user);
+    return res.status(200).json({ user });
   } catch (error) {
     return res.status(404).json({ message: " User not found" });
   }
@@ -177,10 +177,10 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
     delete editedUser._doc.passwordHash;
     delete editedUser._doc.__v;
 
-    return res.status(200).json(editedUser);
+    return res.status(200).json({ editedUser });
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ message: "Error at editing user." });
   }
 });
 
@@ -199,7 +199,7 @@ router.get("/desactived-account/:idUser", async (req, res) => {
     console.log(error);
     return res
       .status(400)
-      .json({ message: "Erro ao atualizar o status do usuario" });
+      .json({ message: "Error at changing status of user" });
   }
 });
 module.exports = router;

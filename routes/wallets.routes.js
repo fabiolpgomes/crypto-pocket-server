@@ -28,10 +28,10 @@ router.post("/createwallet", isAuth, attachCurrentUser, async (req, res) => {
       { new: true }
     );
 
-    return res.status(201).json(walletAttachment);
+    return res.status(201).json({ message: "Wallet created with success" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ messsage: "Unable to add to wallet" });
+    return res.status(400).json({ message: "Unable to create a new wallet" });
   }
 });
 router.put("/editwallet/:idWallet", async (req, res) => {
@@ -41,9 +41,11 @@ router.put("/editwallet/:idWallet", async (req, res) => {
       ...req.body,
       name: req.body.name,
     });
-    return res.status(200).json({ message: "Nome da carteira alterado" });
+    return res.status(200).json({ message: "Wallet edited" });
   } catch (error) {
-    return res.status(400).json({ message: "Erro ao alterar a carteira" });
+    return res
+      .status(400)
+      .json({ message: "Error at changing data of wallet" });
   }
 });
 
@@ -53,10 +55,10 @@ router.get("/getallwallets", isAuth, attachCurrentUser, async (req, res) => {
     const walletsTotal = await UserModel.find({ _id: loggedUser._id }).populate(
       "wallets"
     );
-    return res.status(200).json(walletsTotal);
+    return res.status(200).json({ walletsTotal });
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({ message: "Erro at fetching all wallets" });
   }
 });
 router.get("/getonewallet/:idwallet", async (req, res) => {
@@ -65,9 +67,11 @@ router.get("/getonewallet/:idwallet", async (req, res) => {
     const specificWallet = await WalletModel.findById(idwallet).populate(
       "crypto"
     );
-    return res.status(200).json(specificWallet);
+    return res.status(200).json({ specificWallet });
   } catch (error) {
-    return res.status(400).json(error);
+    return res
+      .status(400)
+      .json({ message: "Error at accessing data of the wallet" });
   }
 });
 // adicionar uma moeda a essa wallet
