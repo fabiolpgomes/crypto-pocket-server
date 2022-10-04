@@ -25,40 +25,56 @@ Complete CRUD functionality
 
     POST /users/sign-up
 
-**Activate account** Ativa o usuário por um link enviado via email
+**Activate account** Activate account via an email link
 
    GET/users/activate-account/:idUser
 
-**Login** Cria o usuário e o TOKEN
+**Login** Generate tokin when login user
 
     POST /users/login
 
-**Get Current User**  Permite o acesso ao perfil por meio do Token
+**Get Current User**  View all information of the user through token validation
 
     GET /users/profile
     
-**Edit user data** Edita os dados de cadastro do usuário
+**Edit user data** Edit data of the user
 
   PUT /users/edit
 
-**Desactivate Account**
+**Desactivate Account**  Desactivate account of the user.
 
     GET /users/profile/disable-account/:idUser
     
-**Delete Create Wallet** Cria nova carteira de investimento
+**Delete Create Wallet** Create a new wallet for investments in crypto
 
     PUT /wallets/createwallet
 
-**Edita o nome da carteira**
+**Edit wallet** Change the name of the wallet
 
     PUT /wallets/editwallet/:idWallet
-
-**Create a new investment** Faz um novo investimento para a carteira, fazendo um trade de moedas
-
-    DELETE cryptotrade/purchasecoin/:idWalet
-
-
     
+**Get all wallets** Show all wallets of the user by token validation
+
+   GET /wallets/getallwallets
+
+**Get specific wallet** Show one wallet with all crypto informations
+
+   GET /wallets/getonewallet/:idwallet
+
+
+**Create a new investment** Buy a new cryptocoin using data from an API 
+
+   POST cryptotrade/purchasecoin/:idWalet
+   
+   
+**Update all crypto worth** Update the value of each coin of the wallet 
+
+   GET cryptotrade/updatingcrypto/:idWallet
+
+**Sell the crypto** Delete the crypto coin from the wallet and put the profit of the trade in the user info 
+
+   GET cryptotrade/selling/:idCrypto
+
 # Developers GitHub
 
 - [Fabio Gomes](https://github.com/fabiolpgomes)
