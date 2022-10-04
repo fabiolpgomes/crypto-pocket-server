@@ -117,7 +117,6 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User not registered" });
     }
 
-
     //sabendo que o user existe, vamos comparar as senhas agora
     if (await bcrypt.compare(password, user.passwordHash)) {
       //deletando a senha
@@ -150,7 +149,7 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
     if (!loggedUser) {
       return res.status(404).json({ message: " User not found" });
     }
-    const user = await UserModel.findById(loggedUser._id);
+    const user = await UserModel.findById(loggedUser._id).populate("wallets");
     //retorna erro quando o usario esta logado
 
     delete user._doc.passwordHash; //deletar o password e a versao
@@ -187,7 +186,6 @@ router.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
 
 // Desativar a conta de um usuario
 
-
 router.get("/desactived-account/:idUser", async (req, res) => {
   try {
     const { idUser } = req.params;
@@ -202,7 +200,6 @@ router.get("/desactived-account/:idUser", async (req, res) => {
     return res
       .status(400)
       .json({ message: "Erro ao atualizar o status do usuario" });
-
   }
 });
 module.exports = router;

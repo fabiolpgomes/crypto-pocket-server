@@ -5,4 +5,8 @@ const allCoins = Cryptooos.data.map((element) => {
 const filtrandoCoin = allCoins.filter((element) => {
   return element.nome_da_moeda === "Tether";
 });
-console.log(filtrandoCoin);
+
+const htmlCoing = Cryptooos.data.map((element) => {
+  return `<option value="${element.name}"> ${element.name}</option>`;
+});
+console.log(htmlCoing);
