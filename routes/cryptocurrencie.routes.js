@@ -15,8 +15,8 @@ router.post(
       const response = await axios.get(
         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=e8d1cfa6-a4a1-4cba-8253-5e925080d77a"
       );
-      
-      const { idWallet } = req.params;
+
+           const { idWallet } = req.params;
       // axios pegando as informacoes da api de moedas.
       const loggedInUser = req.currentUser;
       const allCoins = response.data.data.map((element) => {
@@ -79,9 +79,6 @@ router.get("/updatingcrypto/:idWallet", async (req, res) => {
     });
     //////////////////////////
 
-    console.log(walletUpdatedCoins);
-    console.log(allCoins1);
-
     walletUpdatedCoins.forEach(async (coin) => {
       let apiFetching = allCoins1.filter((moeda) => {
         return moeda.nome_da_moeda == coin.cryptocurrencie;
@@ -97,5 +94,30 @@ router.get("/updatingcrypto/:idWallet", async (req, res) => {
     return res.status(400).json({ message: error });
   }
 });
-router.get("/selling");
+router.get("/selling/:idCrypto", async (req, res) => {
+  try {
+    const { idCrypto } = req.params;
+    const getCrypto = await CryptocurrencieModel.findById(idCrypto);
+    await getCrypto.update({
+      balance: Number(getCrypto.totalCrypto) * Number(getCrypto.priceAPI),
+    });
+    const WalletMother = await WalletModel.findOneAndUpdate(
+      {
+        crypto: { $in: [idCrypto] },
+      },
+      { $pull: { crypto: idCrypto } }
+    );
+    const WalletOwner = await UserModel.findOneAndUpdate(
+      {
+        wallets: { $in: [WalletMother._id] },
+      },
+      { $inc: { profit: getCrypto.balance - getCrypto.investment } }
+    );
+    const moedaVendida = await CryptocurrencieModel.findOneAndDelete(idCrypto);
+    return res.status(200).json({ data: WalletOwner });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ mensagem: "Erro" });
+  }
+});
 module.exports = router;
