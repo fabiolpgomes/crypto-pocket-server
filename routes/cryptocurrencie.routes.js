@@ -16,7 +16,7 @@ router.post(
         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=e8d1cfa6-a4a1-4cba-8253-5e925080d77a"
       );
 
-           const { idWallet } = req.params;
+      const { idWallet } = req.params;
       // axios pegando as informacoes da api de moedas.
       const loggedInUser = req.currentUser;
       const allCoins = response.data.data.map((element) => {
@@ -44,7 +44,8 @@ router.post(
         loggedInUser.signatureType === "BASIC"
       ) {
         return res.status(400).json({
-          erro: "Não é possível adicionar mais nenhuma moeda a essa carteira",
+          message:
+            "We can't add a new crypto to your wallet because of your plan",
         });
       }
       const attachingToWallet = await WalletModel.findByIdAndUpdate(
@@ -54,10 +55,12 @@ router.post(
         },
         { new: true }
       );
-      return res.status(200).json(attachingToWallet);
+      return res.status(200).json({ message: "Crypto bought with success" });
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ erro: error });
+      return res
+        .status(400)
+        .json({ message: "Problem at creating a new crypto to your wallet" });
     }
   }
 );
@@ -88,10 +91,12 @@ router.get("/updatingcrypto/:idWallet", async (req, res) => {
       });
     });
 
-    return res.status(200).json({ message: "Dados atualizados com sucesso" });
+    return res.status(200).json({ message: "Crypto data updated" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ message: error });
+    return res
+      .status(400)
+      .json({ message: "Error at updating data of all crypto." });
   }
 });
 router.get("/selling/:idCrypto", async (req, res) => {
@@ -114,10 +119,22 @@ router.get("/selling/:idCrypto", async (req, res) => {
       { $inc: { profit: getCrypto.balance - getCrypto.investment } }
     );
     const moedaVendida = await CryptocurrencieModel.findOneAndDelete(idCrypto);
-    return res.status(200).json({ data: WalletOwner });
+    return res.status(200).json({ message: "Crypto sold and profit updated" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ mensagem: "Erro" });
+    return res.status(400).json({ message: "Error at selling this crypto." });
+  }
+});
+router.get("/cryptodetails/:idcryptocoin", async (req, res) => {
+  try {
+    const { idcryptocoin } = req.params;
+    const cryptoDetail = await CryptocurrencieModel.findById(idcryptocoin);
+    return res.status(200).json({ cryptoDetail });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ message: "Error when accessing the data of this crypto." });
   }
 });
 module.exports = router;
