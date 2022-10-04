@@ -77,7 +77,7 @@ router.get("/updatingcrypto/:idWallet", async (req, res) => {
         valor_moeda: element.quote.USD.price,
       };
     });
-    //////////////////////////
+   
 
     walletUpdatedCoins.forEach(async (coin) => {
       let apiFetching = allCoins1.filter((moeda) => {
@@ -88,7 +88,7 @@ router.get("/updatingcrypto/:idWallet", async (req, res) => {
       });
     });
 
-    return res.status(200).json({ message: "Dados atualizados com sucesso" });
+    return res.status(200).json({ message: "Cryptocurrency Values Updated Successfully" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ message: error });
