@@ -18,8 +18,8 @@ let transporter = nodemailer.createTransport({
   service: "Outlook",
   auth: {
     secure: false,
-    user: "bruno.apos13.85wdftironhack_bruno.apos13@outlook.com",
-    pass: "kkklmpkkklmp@3713132",
+    user: "ironhackFG@outlook.com",
+    pass: "SenhaForte@123",
   },
 });
 
@@ -60,10 +60,10 @@ router.post("/sign-up", async (req, res) => {
 
     //envio de email, configurando o email que será enviado!
     const mailOptions = {
-      from: "bruno.apos13.85wdftironhack_bruno.apos13@outlook.com", // nossa email
+      from: "ironhackFG@outlook.com", // nossa email
       to: email, //email do usuário que se cadastrou
       subject: "Account Activation", //assunto
-      html: `<p>Click on the link to activate your account:<p> <a href=http://localhost:4000/users/activate-account/${user._id}>LINK</a>`,
+      html: `<p>Click on the link to activate your account: <a href=http://localhost:4000/users/activate-account/${user._id}>LINK</a></p>`,
     };
 
     //Dispara e=mail para o usuario
