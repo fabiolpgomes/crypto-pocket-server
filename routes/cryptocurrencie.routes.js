@@ -99,7 +99,7 @@ router.get("/updatingcrypto/:idWallet", async (req, res) => {
       .json({ message: "Error at updating data of all crypto." });
   }
 });
-router.get("/selling/:idCrypto", async (req, res) => {
+router.delete("/selling/:idCrypto", async (req, res) => {
   try {
     const { idCrypto } = req.params;
     const getCrypto = await CryptocurrencieModel.findById(idCrypto);
@@ -116,7 +116,12 @@ router.get("/selling/:idCrypto", async (req, res) => {
       {
         wallets: { $in: [WalletMother._id] },
       },
-      { $inc: { profit: getCrypto.balance - getCrypto.investment } }
+      {
+        $inc: {
+          profit:
+            getCrypto.totalCrypto * getCrypto.priceAPI - getCrypto.investment,
+        },
+      }
     );
     const moedaVendida = await CryptocurrencieModel.findOneAndDelete(idCrypto);
     return res.status(200).json({ message: "Crypto sold and profit updated" });
