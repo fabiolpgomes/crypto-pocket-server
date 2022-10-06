@@ -63,7 +63,7 @@ router.post("/sign-up", async (req, res) => {
       from: "ironhackFG@outlook.com", // nossa email
       to: email, //email do usuário que se cadastrou
       subject: "Account Activation", //assunto
-      html: `<p>Click on the link to activate your account: <a href=http://localhost:4000/users/activate-account/${user._id}>LINK</a></p>`,
+      html: `<p>Click on the link to activate your account: <a href=https://cryptopocketbf.herokuapp.com/users/activate-account/${user._id}>LINK</a></p>`,
     };
 
     //Dispara e=mail para o usuario
