@@ -18,8 +18,8 @@ let transporter = nodemailer.createTransport({
   service: "Outlook",
   auth: {
     secure: false,
-    user: "bruno.apos13.85wdftironhack_bruno.apos13@outlook.com",
-    pass: "kkklmpkkklmp@3713132",
+    user: "ironhackFG@outlook.com",
+    pass: "SenhaForte@123",
   },
 });
 
