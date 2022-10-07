@@ -11,7 +11,7 @@ The Crypto Pocket app was created to facilitate end-user cryptocurrency manageme
 This project has been created in the third module at Ironhack São Paulo - Web Development Bootcamp.
 
 Simple REST API to allow for complete CRUD  at the endpoint:
-https://xxxxxx.herokuapp.com
+https://cryptopocket.netlify.app/
 
 
 # Features - MERN stack
