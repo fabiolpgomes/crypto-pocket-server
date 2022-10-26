@@ -88,7 +88,7 @@ Front-end for Crypto Pocket control app (**mobile** and **web**)!
 
 # Presentation
 
-[Click here](https://www.canva.com/design/DAE6l1qSFZI/xZhufOFHCylg5A8tYSolLw/view?utm_content=DAE6l1qSFZI&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton)
+[Click here](https://docs.google.com/presentation/d/1QqvAl7l7TF04w819LFqdFVEG58O4U1lQOSXtHbENAEQ/edit?usp=sharing)
 
 ## Install
 To run the application on your localhost, clone the repo and then execute the commands below:
